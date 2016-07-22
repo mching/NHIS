@@ -208,6 +208,18 @@ cam.design <-
     data = x.sa				# note the change in the source data frame
   )
 
+# Clean up extra names but need to keep path to incmim because of use in mi_income
+# data import file
+rm(x)
+rm(childcam.name)
+rm(columns.in.both.dfs)
+rm(df.name)
+rm(merge.vars)
+rm(redundant.columns)
+rm(year)
+rm(path.to.childcam.file)
+rm(path.to.samchild.file)
+
 # notice these two 'design' objects can be used 
 # in all subsequent analysis commands that do not involve imputed income
 
@@ -225,13 +237,13 @@ cam.design <-
 # 
 # # count the weighted number of individuals in nhis #
 # 
-# # add a new variable 'one' that simply has the number 1 for each record #
-# 
-# cam.design <-
-#   update( 
-#     one = 1 ,
-#     cam.design
-#   )
+# add a new variable 'one' that simply has the number 1 for each record #
+
+cam.design <-
+  update(
+    one = 1 ,
+    cam.design
+  )
 # 
 # # the child civilian, non-institutionalized population of the united states #
 # svytotal(
