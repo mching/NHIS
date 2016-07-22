@@ -219,25 +219,25 @@ cam.design <-
 
 # count the total (unweighted) number of records in nhis #
 
-# simply use the nrow function on both designs
-# nrow( personsx.design )
-nrow( cam.design )
-
-# count the weighted number of individuals in nhis #
-
-# add a new variable 'one' that simply has the number 1 for each record #
-
-cam.design <-
-  update( 
-    one = 1 ,
-    cam.design
-  )
-
-# the child civilian, non-institutionalized population of the united states #
-svytotal(
-  ~one ,
-  cam.design 
-)
+# # simply use the nrow function on both designs
+# # nrow( personsx.design )
+# nrow( cam.design )
+# 
+# # count the weighted number of individuals in nhis #
+# 
+# # add a new variable 'one' that simply has the number 1 for each record #
+# 
+# cam.design <-
+#   update( 
+#     one = 1 ,
+#     cam.design
+#   )
+# 
+# # the child civilian, non-institutionalized population of the united states #
+# svytotal(
+#   ~one ,
+#   cam.design 
+# )
 
 
 ############################################
