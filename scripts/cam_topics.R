@@ -14,5 +14,17 @@
 # https://github.com/mching/NHIS/blob/master/scripts/demographics.R
 
 # Chiropractic
-# Ever used cco_use
+# Ever used: cco_use
+table(x.sa$cco_use, useNA = "if")
+x.sa$cco_use_r <- ifelse(x.sa$cco_use > 2, NA, x.sa$cco_use)
+table(x.sa$cco_use_r, x.sa$cco_use, useNA = "if")
+table(chiro = x.sa$cco_use_r, asd = x.sa$ccondl6r_r, useNA = "if")
+prop.table(table(x.sa$cco_use_r))
 
+cam.design <- update(cam.design, sex_f_ = factor(x.sa$sex, labels = c("male", "female")))
+
+svytotal(~sex_f_, design = cam.design)
+confint(svytotal(~sex_f_, design = cam.design))
+
+svymean(~I(sex_f_ == "male"), cam.design)
+confint(svymean(~I(sex_f_ == "male"), cam.design))
