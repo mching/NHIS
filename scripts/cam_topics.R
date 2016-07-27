@@ -13,6 +13,25 @@
 # You also need to run the demographics script to create some of the recoded disability and other demographic variables
 # https://github.com/mching/NHIS/blob/master/scripts/demographics.R
 
+# Helper functions
+recode_yes_no_NA <- function(varname) {
+  # takes variable then recodes it as 1, 2, with all else as NA
+  tmpvar <- ifelse(varname >2, NA, varname)
+  return(tmpvar)
+}
+
+tables_orig_recoded <- function(varname, recoded_varname) {
+  # takes variable and recoded variable and gets frequency, cross-tab
+  print(table(recoded_varname, useNA = "if"))
+  print(prop.table(table(recoded_varname), useNA = "if"))
+  print(table(Recoded = recoded_varname, Original = varname, useNA = "if"))
+}
+
+survey_total_mean <- function(varname) {
+  # adds the variable to the survey object and reads out the survey total and proportion of the variable
+  
+}
+
 # Chiropractic
 # Ever used: cco_use
 table(x.sa$cco_use, useNA = "if")
@@ -21,10 +40,4 @@ table(x.sa$cco_use_r, x.sa$cco_use, useNA = "if")
 table(chiro = x.sa$cco_use_r, asd = x.sa$ccondl6r_r, useNA = "if")
 prop.table(table(x.sa$cco_use_r))
 
-cam.design <- update(cam.design, sex_f_ = factor(x.sa$sex, labels = c("male", "female")))
-
-svytotal(~sex_f_, design = cam.design)
-confint(svytotal(~sex_f_, design = cam.design))
-
-svymean(~I(sex_f_ == "male"), cam.design)
-confint(svymean(~I(sex_f_ == "male"), cam.design))
+# Last 12 months used: cco_usm
