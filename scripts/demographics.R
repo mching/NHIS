@@ -228,7 +228,7 @@ x.sa$ccondl6r_r <- ifelse(x.sa$ccondl6r > 2, NA, x.sa$ccondl6r)
 table(x.sa$ccondl6r, x.sa$ccondl6r_r, useNA = "if")
 
 cam.design <- update(cam.design,
-                     ASD_ = factor(x.sa$ccondl6r_r, labels = c("ASD", "no CP")))
+                     ASD_ = factor(x.sa$ccondl6r_r, labels = c("ASD", "no ASD")))
 
 # Number and percentage of children with ASD
 svy_total_prop_CI("ASD_", "ASD", cam.design, na.rm = T)
