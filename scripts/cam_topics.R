@@ -17,6 +17,7 @@
 recode_yes_no_NA <- function(varname) {
   # takes variable then recodes it as 1, 2, with all else as NA
   tmpvar <- ifelse(varname >2, NA, varname)
+#   tmpvar <- factor(tmpvar, labels = c(1,2), levels = c("yes", "no"))
   return(tmpvar)
 }
 
@@ -113,4 +114,132 @@ confint(svytotal(~cco_total, cam.design, na.rm = T))
 # Get the amount spent by those who know exactly how many visits
 x.sa$cco_avgs <- avg_cost_recode(x.sa$cco_avgs)
 table(cost_per_visit = x.sa$cco_avgs, visits = x.sa$cco_tmno)
-x.sa$cco_est_total <- x.sa$cco_avgs
+x.sa$cco_est_total <- x.sa$cco_avgs * x.sa$cco_tmno
+tablen(x.sa$cco_est_total)
+# Only 7 individuals were represented this way
+tablen(x.sa$cco_avgs)
+# There are only 14 total individuals who reported average per visit costs for cco
+sum(table(x.sa$cco_avgs))
+
+# How much was for ASD
+svyby(~cco_total, by = ~ASD_, FUN = svytotal, design = cam.design, na.rm = T)
+
+# Other DD
+svyby(~cco_total, by = ~Other_DD_, FUN = svytotal, design = cam.design, na.rm = T)
+
+
+#############################
+# Supplements               #
+#############################
+# Multivitamin
+# Ever used: cvt_use
+x.sa$cvt_use_r <- recode_yes_no_NA(x.sa$cvt_use)
+tables_orig_recoded(x.sa$cvt_use, x.sa$cvt_use_r)
+# 12 month use
+x.sa$cvt_usm_r <- recode_yes_no_NA(x.sa$cvt_usm)
+tables_orig_recoded(x.sa$cvt_usm, x.sa$cvt_usm_r)
+# ASD overlap
+table(MV_ever = x.sa$cvt_use_r, asd = x.sa$ccondl6r_r, useNA = "if")
+table(MV_12mo = x.sa$cvt_usm_r, asd = x.sa$ccondl6r_r, useNA = "if")
+# ID overlap
+table(MV_ever = x.sa$cvt_use_r, id = x.sa$intdis_r, useNA = "if")
+table(MV_12mo = x.sa$cvt_usm_r, id = x.sa$intdis_r, useNA = "if")
+# DD overlap
+table(MV_ever = x.sa$cvt_use_r, dd = x.sa$othdd, useNA = "if")
+table(MV_12mo = x.sa$cvt_usm_r, dd = x.sa$othdd, useNA = "if")
+
+# Vitamin A, B, C, D, E, H, or K overlap with multivitamin
+tablen(x.sa$cvt_abev)
+xtablen(x.sa$cvt_abev, x.sa$cvt_use)
+# Ever used: cvt_abev
+x.sa$cvt_abev_r <- recode_yes_no_NA(x.sa$cvt_abev)
+tables_orig_recoded(x.sa$cvt_abev, x.sa$cvt_abev_r)
+# 12 month use: cvt_abum
+x.sa$cvt_abum_r <- recode_yes_no_NA(x.sa$cvt_abum)
+tables_orig_recoded(x.sa$cvt_abum, x.sa$cvt_abum_r)
+# ASD overlap
+table(ABC_ever = x.sa$cvt_abev_r, asd = x.sa$ccondl6r_r, useNA = "if")
+table(ABC_12mo = x.sa$cvt_abum_r, asd = x.sa$ccondl6r_r, useNA = "if")
+# ID overlap
+table(ABC_ever = x.sa$cvt_abev_r, id = x.sa$intdis_r, useNA = "if")
+table(ABC_12mo = x.sa$cvt_abum_r, id = x.sa$intdis_r, useNA = "if")
+# DD overlap
+table(ABC_ever = x.sa$cvt_abev_r, dd = x.sa$othdd, useNA = "if")
+table(ABC_12mo = x.sa$cvt_abum_r, dd = x.sa$othdd, useNA = "if")
+
+# Ca, Mg, Fe, Cr, Zn, Se, K
+# Overlap with multivitamin
+xtablen(x.sa$cvt_use, x.sa$cvt_caev)
+# Ever used: cvt_caev
+x.sa$cvt_caev_r <- recode_yes_no_NA(x.sa$cvt_caev)
+tables_orig_recoded(x.sa$cvt_caev, x.sa$cvt_caev_r)
+# 12 month use: cvt_caum
+x.sa$cvt_caum_r <- recode_yes_no_NA(x.sa$cvt_caum)
+tables_orig_recoded(x.sa$cvt_caum, x.sa$cvt_caum_r)
+# ASD overlap
+table(mineral_ever = x.sa$cvt_caev_r, asd = x.sa$ccondl6r_r, useNA = "if")
+table(mineral_12mo = x.sa$cvt_caum_r, asd = x.sa$ccondl6r_r, useNA = "if")
+# ID overlap
+table(mineral_ever = x.sa$cvt_caev_r, id = x.sa$intdis_r, useNA = "if")
+table(mineral_12mo = x.sa$cvt_caum_r, id = x.sa$intdis_r, useNA = "if")
+# DD overlap
+table(mineral_ever = x.sa$cvt_caev_r, dd = x.sa$othdd, useNA = "if")
+table(mineral_12mo = x.sa$cvt_caum_r, dd = x.sa$othdd, useNA = "if")
+
+# Herbs
+# Ever used: chb_evr
+x.sa$chb_evr_r <- recode_yes_no_NA(x.sa$chb_evr)
+tables_orig_recoded(x.sa$chb_evr, x.sa$chb_evr_r)
+# 12 month use: chb_usm
+x.sa$chb_usm_r <- recode_yes_no_NA(x.sa$chb_usm)
+tables_orig_recoded(x.sa$chb_usm, x.sa$chb_usm_r)
+# ASD overlap
+table(herb_ever = x.sa$chb_evr_r, asd = x.sa$ccondl6r_r, useNA = "if")
+table(herb_12mo = x.sa$chb_usm_r, asd = x.sa$ccondl6r_r, useNA = "if")
+# ID overlap
+table(herb_ever = x.sa$chb_evr_r, id = x.sa$intdis_r, useNA = "if")
+table(herb_12mo = x.sa$chb_usm_r, id = x.sa$intdis_r, useNA = "if")
+# DD overlap
+table(herb_ever = x.sa$chb_evr_r, dd = x.sa$othdd, useNA = "if")
+table(herb_12mo = x.sa$chb_usm_r, dd = x.sa$othdd, useNA = "if")
+
+# Fish oil
+tablen(x.sa$chblst09)
+xtablen(x.sa$chblst09, x.sa$ccondl6r_r)
+
+# Melatonin
+tablen(x.sa$chblst15)
+xtablen(x.sa$chblst15, x.sa$ccondl6r_r)
+
+# Costs for vitamins or minerals (last purchase)
+x.sa$cvt_cst1_r <- ifelse(x.sa$cvt_cst1 > 9990, NA, x.sa$cvt_cst1)
+tablen(x.sa$cvt_cst1_r)
+cam.design <- update(cam.design, vitamin_total = x.sa$cvt_cst1_r)
+
+# Frequency of purchase
+x.sa$chb_bofn_r <- avg_cost_recode(x.sa$chb_bofn)
+tablen(x.sa$chb_bofn) # number of times
+
+x.sa$chb_boft_r <- ifelse(x.sa$chb_boft > 3, NA, x.sa$chb_boft)
+# per week times 52, per month times 12, per year times 1
+x.sa$chb_boft_r <- factor(x.sa$chb_boft_r, levels = 0:3, 
+                          labels = c("never", "per week", "per month", "per year"))
+tablen(x.sa$chb_boft_r)
+x.sa$vit_purch_multipler <- rep(NA, nrow(x.sa))
+tablen(x.sa$chb_boft_r)
+for(i in 1:nrow(x.sa)) {
+  if(!is.na(x.sa$chb_boft_r[i])) {
+    if(x.sa$chb_boft_r[i] == "never") x.sa$vit_purch_multipler[i] <- 0
+    else if(x.sa$chb_boft_r[i] == "per week") x.sa$vit_purch_multipler[i] <- 52
+    else if(x.sa$chb_boft_r[i] == "per month") x.sa$vit_purch_multipler[i] <- 12
+    else if(x.sa$chb_boft_r[i] == "per year") x.sa$vit_purch_multipler[i] <- 1
+  }
+}
+xtablen(x.sa$vit_purch_multipler, x.sa$chb_boft_r)
+
+# Continue here with multiplying the multipler variable by the number variable
+# to get a number of purchases per year, then we can multiply by last purchase
+# with caveats that the last purchase may not be representative of the year
+
+svytotal(~vitamin_total, design = cam.design, na.rm = T)
+svyby
