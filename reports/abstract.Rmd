@@ -1,0 +1,17 @@
+---
+title: "Complementary Health Approaches in Children with Developmental Disabilities"
+author: "Michael Ching, MD, MPH"
+date: "July 29, 2016"
+output: html_document
+---
+
+# Background
+Complementary health approaches include vitamins, minerals, supplements, mind-body interventions, and manipulation/body based methods. Children with developmental disabilities have been demonstrated to frequently use these interventions. Prior work has been limited by selection bias. There are also few if any cost estimates for complementary health approaches in this population. This study estimates the frequency and cost of complementary health approaches in a nationally representative sample.
+
+# Methods
+Data were from the 2012 National Health Interview Survey. This survey contained a child complementary and alternative medicine supplement administered to parents and caregivers. I used survey weights to obtain national population estimates of the frequency and costs associated with complementary health approaches in children with autism spectrum disorder (ASD), intellectual disability (ID), and other developmental disabilities (DD). 
+
+# Results
+The sample consisted of 13275 children, of whom 690 had ASD (156), ID (137), and/or other DD (592). 
+
+# Conclusion
