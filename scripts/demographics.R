@@ -254,3 +254,26 @@ table(x.sa$ccondl10, useNA = "if")
 with(x.sa, table(othdd, intdis, useNA = "if"))
 with(x.sa, table(ccondl6r_r, intdis, useNA = "if"))
 
+# Combine ASD, other DD, and ID categories
+isASD <- ifelse(is.na(x.sa$ccondl6r_r), NA, ifelse(x.sa$ccondl6r_r == 1, T, F))
+isDD <- ifelse(is.na(x.sa$othdd), NA, ifelse(x.sa$othdd == 1, T, F))
+isID <- ifelse(is.na(x.sa$intdis), NA, ifelse(x.sa$intdis == 1, T, F))
+table(isASD, useNA = "if")
+table(isDD, useNA = "if")
+table(isID, useNA = "if")
+
+isASDDDID <- rep(NA, nrow(x.sa))
+for(i in 1:nrow(x.sa)) {
+  isASDDDID[i] <- any(isASD[i], isDD[i], isID[i])
+}
+table(isASDDDID)
+ftable(isASDDDID~isASD+isDD+isID)
+
+cam.design <- update(cam.design, isASDDDID_ = isASDDDID)
+cam.design <- update(cam.design, isASD_ = isASD)
+cam.design <- update(cam.design, isDD_ = isDD)
+cam.design <- update(cam.design, isID_ = isID)
+svytotal(~isASDDDID_, cam.design, na.rm = T)
+svytotal(~isASD, cam.design, na.rm = T)
+svytotal(~isDD, cam.design, na.rm = T)
+svytotal(~isID, cam.design, na.rm = T)
