@@ -46,6 +46,7 @@ table(x.sa$age_p)
 prop.table(table(x.sa$age_p))
 
 svymean(~age_p, cam.design)
+confint(svymean(~age_p, cam.design))
 svyquantile(~age_p, cam.design, quantiles=c(0.25,0.5,0.75))
 
 # Race
@@ -64,15 +65,15 @@ prop.table(table(factor(x.sa$racerpi2, labels = race_names)))
 svytotal(~race_, cam.design)
 
 # Helper function to automate the estimation of proportions in the population
-race_extract <- function(race_name) {
-  m <- svymean(~I(race_ == race_name), cam.design)
+race_extract <- function(race_name, design) {
+  m <- svymean(~I(race_ == race_name), design)
   print("======================================================")
   print(race_name)
   print(m)
   print(confint(m))
 }
 
-sapply(race_names, race_extract)
+sapply(race_names, race_extract, cam.design)
 
 # Hispanic
 table(x.sa$hispan_i, useNA = "ifany")
@@ -274,6 +275,6 @@ cam.design <- update(cam.design, isASD_ = isASD)
 cam.design <- update(cam.design, isDD_ = isDD)
 cam.design <- update(cam.design, isID_ = isID)
 svytotal(~isASDDDID_, cam.design, na.rm = T)
-svytotal(~isASD, cam.design, na.rm = T)
-svytotal(~isDD, cam.design, na.rm = T)
-svytotal(~isID, cam.design, na.rm = T)
+svytotal(~isASD_, cam.design, na.rm = T)
+svytotal(~isDD_, cam.design, na.rm = T)
+svytotal(~isID_, cam.design, na.rm = T)
