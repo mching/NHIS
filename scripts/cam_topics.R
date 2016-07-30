@@ -147,6 +147,10 @@ table(MV_12mo = x.sa$cvt_usm_r, id = x.sa$intdis_r, useNA = "if")
 # DD overlap
 table(MV_ever = x.sa$cvt_use_r, dd = x.sa$othdd, useNA = "if")
 table(MV_12mo = x.sa$cvt_usm_r, dd = x.sa$othdd, useNA = "if")
+# ASD, DD, ID overlap
+table(MV_ever = x.sa$cvt_use_r, combined = isASDDDID, useNA = "if")
+table(MV_12mo = x.sa$cvt_usm_r, combined = isASDDDID, useNA = "if")
+
 
 # Vitamin A, B, C, D, E, H, or K overlap with multivitamin
 tablen(x.sa$cvt_abev)
@@ -237,9 +241,22 @@ for(i in 1:nrow(x.sa)) {
 }
 xtablen(x.sa$vit_purch_multipler, x.sa$chb_boft_r)
 
-# Continue here with multiplying the multipler variable by the number variable
-# to get a number of purchases per year, then we can multiply by last purchase
-# with caveats that the last purchase may not be representative of the year
+# We can multiply the frequency of purchase per year by last purchase to get 
+# annual spending with the caveat that the last purchase may not be
+# representative of the year
+x.sa$vitamin_annual_total <- x.sa$vit_purch_multipler * x.sa$cvt_cst1_r
+cam.design <- update(cam.design, vitamin_annual_total = x.sa$vitamin_annual_total)
 
-svytotal(~vitamin_total, design = cam.design, na.rm = T)
-svyby
+# Total $ spent on vitamins and minerals per year
+svyby(~vitamin_annual_total, by = ~isASD_, FUN = svytotal, design = cam.design, na.rm = T)
+svyby(~vitamin_annual_total, by = ~isASD_, FUN = svymean, design = cam.design, na.rm = T)
+
+svyby(~vitamin_annual_total, by = ~isDD_, FUN = svytotal, design = cam.design, na.rm = T)
+svyby(~vitamin_annual_total, by = ~isDD_, FUN = svymean, design = cam.design, na.rm = T)
+
+# Something is off here... How come the ID population says only $9 per year?
+svyby(~vitamin_annual_total, by = ~isID_, FUN = svytotal, design = cam.design, na.rm = T)
+svyby(~vitamin_annual_total, by = ~isID_, FUN = svymean, design = cam.design, na.rm = T)
+
+svyby(~vitamin_annual_total, by = ~isASDDDID_, FUN = svytotal, design = cam.design, na.rm = T)
+svyby(~vitamin_annual_total, by = ~isASDDDID_, FUN = svymean, design = cam.design, na.rm = T)
