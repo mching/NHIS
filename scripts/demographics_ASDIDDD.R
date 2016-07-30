@@ -1,0 +1,70 @@
+# demographics of ASD, ID, and DD samples
+
+# Create subset designs
+ASD.design <- subset(cam.design, isASD)
+DD.design <- subset(cam.design, isDD)
+ID.design <- subset(cam.design, isID)
+ASDDDID.design <- subset(cam.design, isASDDDID)
+
+# Total n
+table(isASD, useNA = "if")
+table(isID, useNA = "if")
+table(isDD, useNA = "if")
+table(isASDDDID, useNA = "if")
+
+svymean(~isASD, cam.design, na.rm = TRUE)
+confint(svymean(~isASD, cam.design, na.rm = TRUE))
+svymean(~isID, cam.design, na.rm = TRUE)
+confint(svymean(~isID, cam.design, na.rm = TRUE))
+svymean(~isDD, cam.design, na.rm = TRUE)
+confint(svymean(~isDD, cam.design, na.rm = TRUE))
+svymean(~isASDDDID, cam.design, na.rm = TRUE)
+confint(svymean(~isASDDDID, cam.design, na.rm = TRUE))
+
+# Gender
+table(isASD, x.sa$sex)
+svymean(~I(sex_f_ == "female"), ASD.design)
+confint(svymean(~I(sex_f_ == "female"), ASD.design))
+table(isID, x.sa$sex)
+svymean(~I(sex_f_ == "female"), ID.design)
+confint(svymean(~I(sex_f_ == "female"), ID.design))
+table(isDD, x.sa$sex)
+svymean(~I(sex_f_ == "female"), DD.design)
+confint(svymean(~I(sex_f_ == "female"), DD.design))
+table(isASDDDID, x.sa$sex)
+svymean(~I(sex_f_ == "female"), ASDDDID.design)
+confint(svymean(~I(sex_f_ == "female"), ASDDDID.design))
+
+# Age
+svymean(~age_p, ASD.design)
+confint(svymean(~age_p, ASD.design))
+svymean(~age_p, ID.design)
+confint(svymean(~age_p, ID.design))
+svymean(~age_p, DD.design)
+confint(svymean(~age_p, DD.design))
+svymean(~age_p, ASDDDID.design)
+confint(svymean(~age_p, ASDDDID.design))
+
+# Race
+table(factor(x.sa$racerpi2, labels = race_names), isASD)
+sapply(race_names, race_extract, ASD.design)
+table(factor(x.sa$racerpi2, labels = race_names), isID)
+sapply(race_names, race_extract, ID.design)
+table(factor(x.sa$racerpi2, labels = race_names), isDD)
+sapply(race_names, race_extract, DD.design)
+table(factor(x.sa$racerpi2, labels = race_names), isASDDDID)
+sapply(race_names, race_extract, ASDDDID.design)
+
+# Hispanic
+table(x.sa$hispan_TF, isASD, useNA = "ifany")
+svymean(~I(hispanic_ == "Hispanic"), ASD.design)
+confint(svymean(~I(hispanic_ == "Hispanic"), ASD.design))
+table(x.sa$hispan_TF, isID, useNA = "ifany")
+svymean(~I(hispanic_ == "Hispanic"), ID.design)
+confint(svymean(~I(hispanic_ == "Hispanic"), ID.design))
+table(x.sa$hispan_TF, isDD, useNA = "ifany")
+svymean(~I(hispanic_ == "Hispanic"), DD.design)
+confint(svymean(~I(hispanic_ == "Hispanic"), DD.design))
+table(x.sa$hispan_TF, isASDDDID, useNA = "ifany")
+svymean(~I(hispanic_ == "Hispanic"), ASDDDID.design)
+confint(svymean(~I(hispanic_ == "Hispanic"), ASDDDID.design))
