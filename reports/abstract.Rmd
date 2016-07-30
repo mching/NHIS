@@ -1,17 +1,18 @@
 ---
 title: "Complementary Health Approaches in Children with Developmental Disabilities"
 author: "Michael Ching, MD, MPH"
-date: "July 29, 2016"
+date: "July 30, 2016"
 output: html_document
 ---
 
 # Background
-Complementary health approaches include vitamins, minerals, supplements, mind-body interventions, and manipulation/body based methods. Children with developmental disabilities have been demonstrated to use these interventions frequently although there is substantial variability in estimates of usage. Prior work has been limited by selection bias and sample size. There are also few if any cost estimates for complementary health approaches in this population. This study estimates the frequency and cost of complementary health approaches in a nationally representative sample.
+Complementary health approaches (CHA) include vitamins, minerals, supplements, mind-body interventions, and manipulation/body based methods. Children with developmental disabilities have been reported to use these interventions frequently although there is substantial variability in estimates of usage. Prior work has been limited by selection bias and sample size. This study estimates the frequency of CHA in a nationally representative sample.
 
 # Methods
-Data were from the 2012 National Health Interview Survey. This survey contained a child complementary and alternative medicine supplement administered to parents and caregivers. I used survey weights to obtain national population estimates of the frequency and costs associated with complementary health approaches in children with autism spectrum disorder (ASD), intellectual disability (ID), and other developmental disabilities (DD). 
+Data were from the 2012 National Health Interview Survey. This survey contained a child complementary and alternative medicine supplement administered to parents and caregivers. I used survey weights to obtain national population estimates of the frequency of CHA in children with autism spectrum disorder (ASD), intellectual disability (ID), and other developmental disabilities (DD). I used Pearson's chi-square test with the Rao and Scott adjustment to determine whether children with these diagnoses differed from those without in their usage of CHA.
 
 # Results
-The sample consisted of 13275 children, of whom 690 had ASD (156), ID (137), and/or other DD (592). 
+The sample consisted of 13,275 children, of whom 156 (1.2%) had ASD, 137 (1.0%) had ID, and 592 (4.7%) had DD. Females represented the minority of those with ASD, ID, and DD (17.6%, 26.5%, and 33.2% respectively). The racial and ethnic makeup of the children with disabilities reflected the US population. Our main finding was that children with ASD, ID, and DD used complementary health approaches at rates that mostly did not differ from the general US population. However, the rates of mineral use (e.g., calcium, magnesium) and herbs and non-vitamin supplements (e.g., fish oil, melatonin) were higher in children with ASD and DD, but not ID.
 
 # Conclusion
+Children with developmental disabilities frequently use complementary health approaches, but the frequency of use does not differ in clinically significant ways from the US population except for minerals and herbs.
