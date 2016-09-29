@@ -2,6 +2,7 @@
 
 # Biologically Based
 # Diet
+
 # Chelation
 # Ever used: cch_use
 x.sa$cch_use_r <- recode_yes_no_NA(x.sa$cch_use)
@@ -735,3 +736,44 @@ confint(svymean(~ENERGYTHERAPY, ASDDDID.design, na.rm = T))
 
 ######################################################################
 
+any_alt <- x.sa$cal_cnt > 0
+
+# Count of number people using any alternative therapies (excluding vitamins and
+# minerals)
+
+cam.design <- update(cam.design, any_alt = any_alt)
+ASD.design <- subset(cam.design, isASD)
+DD.design <- subset(cam.design, isDD)
+ID.design <- subset(cam.design, isID)
+ASDDDID.design <- subset(cam.design, isASDDDID)
+nonASDDDID.design <- subset(cam.design, !isASDDDID)
+
+table(any_alt, useNA = "if")
+svymean(~any_alt, cam.design)
+confint(svymean(~any_alt, cam.design))
+
+table(any_alt, isASD, useNA = "if")
+svymean(~any_alt, ASD.design)
+confint(svymean(~any_alt, ASD.design))
+
+table(any_alt, isID, useNA = "if")
+svymean(~any_alt, ID.design)
+confint(svymean(~any_alt, ID.design))
+
+table(any_alt, isDD, useNA = "if")
+svymean(~any_alt, DD.design)
+confint(svymean(~any_alt, DD.design))
+
+table(any_alt, isASDDDID, useNA = "if")
+svymean(~any_alt, ASDDDID.design)
+confint(svymean(~any_alt, ASDDDID.design))
+
+table(any_alt, isASDDDID, useNA = "if")
+svymean(~any_alt, nonASDDDID.design)
+confint(svymean(~any_alt, nonASDDDID.design))
+
+
+svychisq(~any_alt+isASD_, cam.design)
+svychisq(~any_alt+isID_, cam.design)
+svychisq(~any_alt+isDD_, cam.design)
+svychisq(~any_alt+isASDDDID_, cam.design)
