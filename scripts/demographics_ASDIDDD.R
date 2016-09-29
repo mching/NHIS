@@ -5,6 +5,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+nonASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total n
 table(isASD, useNA = "if")
@@ -22,6 +23,9 @@ svymean(~isASDDDID, cam.design, na.rm = TRUE)
 confint(svymean(~isASDDDID, cam.design, na.rm = TRUE))
 
 # Gender
+table(x.sa$sex)
+svymean(~I(sex_f_ == "female"), cam.design)
+confint(svymean(~I(sex_f_ == "female"), cam.design))
 table(isASD, x.sa$sex)
 svymean(~I(sex_f_ == "female"), ASD.design)
 confint(svymean(~I(sex_f_ == "female"), ASD.design))
@@ -36,6 +40,8 @@ svymean(~I(sex_f_ == "female"), ASDDDID.design)
 confint(svymean(~I(sex_f_ == "female"), ASDDDID.design))
 
 # Age
+svymean(~age_p, cam.design)
+confint(svymean(~age_p, cam.design))
 svymean(~age_p, ASD.design)
 confint(svymean(~age_p, ASD.design))
 svymean(~age_p, ID.design)
@@ -45,7 +51,15 @@ confint(svymean(~age_p, DD.design))
 svymean(~age_p, ASDDDID.design)
 confint(svymean(~age_p, ASDDDID.design))
 
+svyquantile(~age_p, quantiles = 0.5, cam.design)
+svyquantile(~age_p, quantiles = 0.5, ASD.design)
+svyquantile(~age_p, quantiles = 0.5, ID.design)
+svyquantile(~age_p, quantiles = 0.5, DD.design)
+svyquantile(~age_p, quantiles = 0.5, ASDDDID.design)
+
 # Race
+table(factor(x.sa$racerpi2, labels = race_names))
+sapply(race_names, race_extract, cam.design)
 table(factor(x.sa$racerpi2, labels = race_names), isASD)
 sapply(race_names, race_extract, ASD.design)
 table(factor(x.sa$racerpi2, labels = race_names), isID)
@@ -56,6 +70,9 @@ table(factor(x.sa$racerpi2, labels = race_names), isASDDDID)
 sapply(race_names, race_extract, ASDDDID.design)
 
 # Hispanic
+table(x.sa$hispan_TF, useNA = "ifany")
+svymean(~I(hispanic_ == "Hispanic"), cam.design)
+confint(svymean(~I(hispanic_ == "Hispanic"), cam.design))
 table(x.sa$hispan_TF, isASD, useNA = "ifany")
 svymean(~I(hispanic_ == "Hispanic"), ASD.design)
 confint(svymean(~I(hispanic_ == "Hispanic"), ASD.design))

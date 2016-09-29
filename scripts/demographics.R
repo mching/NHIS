@@ -24,10 +24,10 @@ cam.design <-
 # Number of children
 nrow(x.sa)
 
-svytotal(
-  ~one ,
-  cam.design 
-)
+# svytotal(
+#   ~one ,
+#   cam.design 
+# )
 
 # Gender breakdown
 cam.design <- update(cam.design, sex_f_ = factor(x.sa$sex, labels = c("male", "female")))
@@ -216,7 +216,7 @@ x.sa$ccondl03_r <- ifelse(x.sa$ccondl03 > 2, NA, x.sa$ccondl03)
 table(x.sa$ccondl03, x.sa$ccondl03_r, useNA = "if")
 
 cam.design <- update(cam.design,
-                     Muscular_dystrophy_ = factor(x.sa$ccondl03_r, labels = c("Muscular_dystrophy", "no CP")))
+                     Muscular_dystrophy_ = factor(x.sa$ccondl03_r, labels = c("Muscular_dystrophy", "no MD")))
 
 # Number and percentage of children with Muscular_dystrophy
 svy_total_prop_CI("Muscular_dystrophy_", "Muscular_dystrophy", cam.design, na.rm = T)
