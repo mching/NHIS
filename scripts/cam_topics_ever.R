@@ -3,42 +3,42 @@
 # Biologically Based
 # Diet
 
-# Chelation
-# Ever used: cch_use
-x.sa$cch_use_r <- recode_yes_no_NA(x.sa$cch_use)
-tables_orig_recoded(x.sa$cch_use, x.sa$cch_use_r)
-
-# Update designs
-cam.design <- update(cam.design, CHELATION = factor(x.sa$cch_use_r, labels = c(T, F)))
-ASD.design <- subset(cam.design, isASD)
-DD.design <- subset(cam.design, isDD)
-ID.design <- subset(cam.design, isID)
-ASDDDID.design <- subset(cam.design, isASDDDID)
-
-# Total population
-table(CHELATION = x.sa$cch_use_r, useNA = "if")
-svymean(~CHELATION, cam.design, na.rm = T)
-confint(svymean(~CHELATION, cam.design, na.rm = T))
-
-# ASD
-table(CHELATION = x.sa$cch_use_r, asd = isASD, useNA = "if") # overlap CHELATION & ASD
-svymean(~CHELATION, ASD.design, na.rm = T)
-confint(svymean(~CHELATION, ASD.design, na.rm = T))
-
-# ID
-table(CHELATION = x.sa$cch_use_r, id = isID, useNA = "if")
-svymean(~CHELATION, ID.design, na.rm = T)
-confint(svymean(~CHELATION, ID.design, na.rm = T))
-
-# DD
-table(CHELATION = x.sa$cch_use_r, dd = isDD, useNA = "if")
-svymean(~CHELATION, DD.design, na.rm = T)
-confint(svymean(~CHELATION, DD.design, na.rm = T))
-
-# ASD, ID, DD
-table(CHELATION = x.sa$cch_use_r, asdddid = isASDDDID, useNA = "if")
-svymean(~CHELATION, ASDDDID.design, na.rm = T)
-confint(svymean(~CHELATION, ASDDDID.design, na.rm = T))
+# # Chelation
+# # Ever used: cch_use
+# x.sa$cch_use_r <- recode_yes_no_NA(x.sa$cch_use)
+# tables_orig_recoded(x.sa$cch_use, x.sa$cch_use_r)
+# 
+# # Update designs
+# cam.design <- update(cam.design, CHELATION = factor(x.sa$cch_use_r, labels = c(T, F)))
+# ASD.design <- subset(cam.design, isASD)
+# DD.design <- subset(cam.design, isDD)
+# ID.design <- subset(cam.design, isID)
+# ASDDDID.design <- subset(cam.design, isASDDDID)
+# 
+# # Total population
+# table(CHELATION = x.sa$cch_use_r, useNA = "if")
+# svymean(~CHELATION, cam.design, na.rm = T)
+# confint(svymean(~CHELATION, cam.design, na.rm = T))
+# 
+# # ASD
+# table(CHELATION = x.sa$cch_use_r, asd = isASD, useNA = "if") # overlap CHELATION & ASD
+# svymean(~CHELATION, ASD.design, na.rm = T)
+# confint(svymean(~CHELATION, ASD.design, na.rm = T))
+# 
+# # ID
+# table(CHELATION = x.sa$cch_use_r, id = isID, useNA = "if")
+# svymean(~CHELATION, ID.design, na.rm = T)
+# confint(svymean(~CHELATION, ID.design, na.rm = T))
+# 
+# # DD
+# table(CHELATION = x.sa$cch_use_r, dd = isDD, useNA = "if")
+# svymean(~CHELATION, DD.design, na.rm = T)
+# confint(svymean(~CHELATION, DD.design, na.rm = T))
+# 
+# # ASD, ID, DD
+# table(CHELATION = x.sa$cch_use_r, asdddid = isASDDDID, useNA = "if")
+# svymean(~CHELATION, ASDDDID.design, na.rm = T)
+# confint(svymean(~CHELATION, ASDDDID.design, na.rm = T))
 
 ######################################################################
 # Any vitamin, mineral
@@ -50,7 +50,7 @@ x.sa$cvt_use_r <- recode_yes_no_NA(x.sa$cvt_use)
 tables_orig_recoded(x.sa$cvt_use, x.sa$cvt_use_r)
 
 # Update designs
-cam.design <- update(cam.design, MVI = factor(x.sa$cvt_use_r, labels = c(T, F)))
+cam.design <- update(cam.design, MVI = x.sa$cvt_use_r == 1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
@@ -88,7 +88,7 @@ x.sa$cvt_abev_r <- recode_yes_no_NA(x.sa$cvt_abev)
 tables_orig_recoded(x.sa$cvt_abev, x.sa$cvt_abev_r)
 
 # Update designs
-cam.design <- update(cam.design, ABCDE = factor(x.sa$cvt_abev_r, labels = c(T, F)))
+cam.design <- update(cam.design, ABCDE = x.sa$cvt_abev_r==1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
@@ -127,7 +127,7 @@ x.sa$cvt_caev_r <- recode_yes_no_NA(x.sa$cvt_caev)
 tables_orig_recoded(x.sa$cvt_caev, x.sa$cvt_caev_r)
 
 # Update designs
-cam.design <- update(cam.design, MINERAL = factor(x.sa$cvt_caev_r, labels = c(T, F)))
+cam.design <- update(cam.design, MINERAL = x.sa$cvt_caev_r==1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
@@ -166,11 +166,15 @@ x.sa$chb_evr_r <- recode_yes_no_NA(x.sa$chb_evr)
 tables_orig_recoded(x.sa$chb_evr, x.sa$chb_evr_r)
 
 # Update designs
-cam.design <- update(cam.design, ANYHERB = factor(x.sa$chb_evr_r, labels = c(T, F)))
+cam.design <- update(cam.design, ANYHERB = x.sa$chb_evr_r==1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+
+str(factor(x.sa$chb_evr_r, labels = c(T,F)))
+str(any_alt)
+str(x.sa$chb_evr_r==1)
 
 # Total population
 table(ANYHERB = x.sa$chb_evr_r, useNA = "if")
@@ -253,7 +257,7 @@ x.sa$cyge_yog_r <- recode_yes_no_NA(x.sa$cyge_yog)
 tables_orig_recoded(x.sa$cyge_yog, x.sa$cyge_yog_r)
 
 # Update designs
-cam.design <- update(cam.design, YOGA = factor(x.sa$cyge_yog_r, labels = c(T, F)))
+cam.design <- update(cam.design, YOGA = x.sa$cyge_yog_r==1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
@@ -414,7 +418,7 @@ x.sa$cmb_use_r <- recode_yes_no_NA(x.sa$cmb_use)
 tables_orig_recoded(x.sa$cmb_use, x.sa$cmb_use_r)
 
 # Update designs
-cam.design <- update(cam.design, MEDITATION = factor(x.sa$cmb_use_r, labels = c(T, F)))
+cam.design <- update(cam.design, MEDITATION = x.sa$cmb_use_r==1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
@@ -459,7 +463,7 @@ x.sa$cms_use_r <- recode_yes_no_NA(x.sa$cms_use)
 tables_orig_recoded(x.sa$cms_use, x.sa$cms_use_r)
 
 # Update designs
-cam.design <- update(cam.design, MASSAGE = factor(x.sa$cms_use_r, labels = c(T, F)))
+cam.design <- update(cam.design, MASSAGE = x.sa$cms_use_r==1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
@@ -500,7 +504,7 @@ x.sa$cco_use_r <- ifelse(x.sa$cco_use > 2, NA, x.sa$cco_use)
 table(x.sa$cco_use_r, x.sa$cco_use, useNA = "if")
 
 # Update designs
-cam.design <- update(cam.design, chiro = factor(x.sa$cco_use_r, labels = c(T, F)))
+cam.design <- update(cam.design, chiro = x.sa$cco_use_r==1)
 ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
