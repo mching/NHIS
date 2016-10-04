@@ -1,0 +1,6 @@
+# TO DO
+
+create regression on all the variables
+associate the highest education variable
+do all the CAM_ever as CAM_12_mos
+cost estimates
