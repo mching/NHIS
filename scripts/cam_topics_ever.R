@@ -55,6 +55,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(MVI = x.sa$cvt_use_r, useNA = "if")
@@ -81,6 +82,11 @@ table(MVI = x.sa$cvt_use_r, asdddid = isASDDDID, useNA = "if")
 svymean(~MVI, ASDDDID.design, na.rm = T)
 confint(svymean(~MVI, ASDDDID.design, na.rm = T))
 
+# no ASD, ID, DD
+table(MVI = x.sa$cvt_use_r, asdddid = isASDDDID, useNA = "if")
+svymean(~MVI, noASDDDID.design, na.rm = T)
+confint(svymean(~MVI, noASDDDID.design, na.rm = T))
+
 ######################################################################
 # Vitamin ABCDEHK...
 # Ever used: cvt_abev
@@ -93,6 +99,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(ABCDE = x.sa$cvt_abev_r, useNA = "if")
@@ -119,6 +126,11 @@ table(ABCDE = x.sa$cvt_abev_r, asdddid = isASDDDID, useNA = "if")
 svymean(~ABCDE, ASDDDID.design, na.rm = T)
 confint(svymean(~ABCDE, ASDDDID.design, na.rm = T))
 
+# no ASD, ID, DD
+table(ABCDE = x.sa$cvt_abev_r, asdddid = isASDDDID, useNA = "if")
+svymean(~ABCDE, noASDDDID.design, na.rm = T)
+confint(svymean(~ABCDE, noASDDDID.design, na.rm = T))
+
 
 ######################################################################
 # Minerals
@@ -132,6 +144,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(MINERAL = x.sa$cvt_caev_r, useNA = "if")
@@ -158,6 +171,10 @@ table(MINERAL = x.sa$cvt_caev_r, asdddid = isASDDDID, useNA = "if")
 svymean(~MINERAL, ASDDDID.design, na.rm = T)
 confint(svymean(~MINERAL, ASDDDID.design, na.rm = T))
 
+# no ASD, ID, DD
+table(MINERAL = x.sa$cvt_caev_r, asdddid = isASDDDID, useNA = "if")
+svymean(~MINERAL, noASDDDID.design, na.rm = T)
+confint(svymean(~MINERAL, noASDDDID.design, na.rm = T))
 
 ######################################################################
 # Any Herbal or supplement
@@ -171,9 +188,9 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 str(factor(x.sa$chb_evr_r, labels = c(T,F)))
-str(any_alt)
 str(x.sa$chb_evr_r==1)
 
 # Total population
@@ -201,6 +218,11 @@ table(ANYHERB = x.sa$chb_evr_r, asdddid = isASDDDID, useNA = "if")
 svymean(~ANYHERB, ASDDDID.design, na.rm = T)
 confint(svymean(~ANYHERB, ASDDDID.design, na.rm = T))
 
+# no ASD, ID, DD
+table(ANYHERB = x.sa$chb_evr_r, asdddid = isASDDDID, useNA = "if")
+svymean(~ANYHERB, noASDDDID.design, na.rm = T)
+confint(svymean(~ANYHERB, noASDDDID.design, na.rm = T))
+
 ######################################################################
 
 # Homeopathy
@@ -214,6 +236,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(HOMEOPATHY = x.sa$chm_use_r, useNA = "if")
@@ -262,6 +285,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(YOGA = x.sa$cyge_yog_r, useNA = "if")
@@ -288,6 +312,10 @@ table(YOGA = x.sa$cyge_yog_r, asdddid = isASDDDID, useNA = "if")
 svymean(~YOGA, ASDDDID.design, na.rm = T)
 confint(svymean(~YOGA, ASDDDID.design, na.rm = T))
 
+# ASD, ID, DD
+table(YOGA = x.sa$cyge_yog_r, asdddid = isASDDDID, useNA = "if")
+svymean(~YOGA, noASDDDID.design, na.rm = T)
+confint(svymean(~YOGA, noASDDDID.design, na.rm = T))
 
 ######################################################################
 
@@ -302,6 +330,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(TRADHEALER = x.sa$ctr_evr_r, useNA = "if")
@@ -343,6 +372,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(BIOFEEDBACK = x.sa$cbi_use_r, useNA = "if")
@@ -423,6 +453,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(MEDITATION = x.sa$cmb_use_r, useNA = "if")
@@ -449,6 +480,10 @@ table(MEDITATION = x.sa$cmb_use_r, asdddid = isASDDDID, useNA = "if")
 svymean(~MEDITATION, ASDDDID.design, na.rm = T)
 confint(svymean(~MEDITATION, ASDDDID.design, na.rm = T))
 
+# no ASD, ID, DD
+table(MEDITATION = x.sa$cmb_use_r, asdddid = isASDDDID, useNA = "if")
+svymean(~MEDITATION, noASDDDID.design, na.rm = T)
+confint(svymean(~MEDITATION, noASDDDID.design, na.rm = T))
 
 ######################################################################
 
@@ -468,6 +503,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(MASSAGE = x.sa$cms_use_r, useNA = "if")
@@ -494,6 +530,10 @@ table(MASSAGE = x.sa$cms_use_r, asdddid = isASDDDID, useNA = "if")
 svymean(~MASSAGE, ASDDDID.design, na.rm = T)
 confint(svymean(~MASSAGE, ASDDDID.design, na.rm = T))
 
+# no ASD, ID, DD
+table(MASSAGE = x.sa$cms_use_r, asdddid = isASDDDID, useNA = "if")
+svymean(~MASSAGE, noASDDDID.design, na.rm = T)
+confint(svymean(~MASSAGE, noASDDDID.design, na.rm = T))
 
 ######################################################################
 # Chiropractic or Osteopathic
@@ -509,6 +549,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(chiro = x.sa$cco_use_r, useNA = "if")
@@ -534,6 +575,11 @@ confint(svymean(~chiro, DD.design, na.rm = T))
 table(chiro = x.sa$cco_use_r, asdddid = isASDDDID, useNA = "if")
 svymean(~chiro, ASDDDID.design, na.rm = T)
 confint(svymean(~chiro, ASDDDID.design, na.rm = T))
+
+# no ASD, ID, DD
+table(chiro = x.sa$cco_use_r, asdddid = isASDDDID, useNA = "if")
+svymean(~chiro, noASDDDID.design, na.rm = T)
+confint(svymean(~chiro, noASDDDID.design, na.rm = T))
 ######################################################################
 # Hypnosis
 
@@ -549,6 +595,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(CRANIOSACRAL = x.sa$ccs_use_r, useNA = "if")
@@ -773,8 +820,8 @@ svymean(~any_alt, ASDDDID.design)
 confint(svymean(~any_alt, ASDDDID.design))
 
 table(any_alt, isASDDDID, useNA = "if")
-svymean(~any_alt, nonASDDDID.design)
-confint(svymean(~any_alt, nonASDDDID.design))
+svymean(~any_alt, noASDDDID.design)
+confint(svymean(~any_alt, noASDDDID.design))
 
 
 svychisq(~any_alt+isASD_, cam.design)
