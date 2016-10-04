@@ -1,12 +1,30 @@
 library(ggplot2)
 library(RColorBrewer)
+library(dplyr)
 palette_choice = "Set2"
 text_color = "#2D2DB9"
 
 fig_data <- read.csv("./scripts/natural_products.csv")
-fig_data$condition <- factor(fig_data$condition, levels = c("ASD", "ID", "DD", "ASD, ID, or DD", "US children"))
+fig_data$condition <- factor(fig_data$condition, levels = c("ASD", "ID", "DD", "ASD, ID, or DD", "US children", "no ASD, ID, or DD"))
 
-ggplot(fig_data, aes(x=cam_name, y=prevalence, fill=condition)) + 
+# ggplot(fig_data, aes(x=cam_name, y=prevalence, fill=condition)) + 
+#   geom_bar(position=position_dodge(), stat="identity") + 
+#   scale_fill_brewer(palette=palette_choice) +
+#   geom_errorbar(aes(ymin=lower_ci, ymax=higher_ci), width=.2, # Width of the error bars 
+#                 position=position_dodge(.9), color = text_color) +
+#   ggtitle("Figure 1: Natural Products") +
+#   labs(x = "Therapy", y = "Prevalence") +
+#   scale_y_continuous(labels = scales::percent) +
+#   theme(text = element_text(family = "Avenir Next", size = 15, color = text_color),
+#         axis.text.x = element_text(size = 9, color = text_color),
+#         axis.text.y = element_text(color = text_color),
+#         axis.title.x = element_text(margin = margin(10, 0, 0, 0)),
+#         axis.title.y = element_text(margin = margin(0, 10, 0, 0))
+#         )
+
+fig_data %>% filter(condition != c("ASD, ID, or DD")) %>% 
+  filter(condition != c("US children")) %>%
+  ggplot( aes(x=cam_name, y=prevalence, fill=condition)) + 
   geom_bar(position=position_dodge(), stat="identity") + 
   scale_fill_brewer(palette=palette_choice) +
   geom_errorbar(aes(ymin=lower_ci, ymax=higher_ci), width=.2, # Width of the error bars 
@@ -19,7 +37,8 @@ ggplot(fig_data, aes(x=cam_name, y=prevalence, fill=condition)) +
         axis.text.y = element_text(color = text_color),
         axis.title.x = element_text(margin = margin(10, 0, 0, 0)),
         axis.title.y = element_text(margin = margin(0, 10, 0, 0))
-        )
+  )
+
 
 fig_data <- read.csv("./scripts/mind_and_body.csv")
 fig_data$condition <- factor(fig_data$condition, levels = c("ASD", "ID", "DD", "ASD, ID, or DD", "US children"))
@@ -45,11 +64,13 @@ fig_data$condition <- factor(fig_data$condition, levels = c("ASD", "ID", "DD", "
 #   labs(x = "Therapy", y = "Prevalence") +
 #   scale_y_continuous(labels = scales::percent) 
 # 
-# Just ASD, ID, DD vs US total
-fig_data <- read.csv("./scripts/np_combined.csv")
-fig_data$condition <- factor(fig_data$condition, levels = c("ASD, ID, or DD", "US children"))
+# Just ASD, ID, DD vs US total (Mind & Body)
+fig_data <- read.csv("./scripts/mind_and_body.csv")
+fig_data$condition <- factor(fig_data$condition, levels = c("ASD", "ID", "DD", "ASD, ID, or DD", "US children", "no ASD, ID, or DD"))
 
-ggplot(fig_data, aes(x=cam_name, y=prevalence, fill=condition)) + 
+fig_data %>% filter(condition != c("US children")) %>% 
+  filter(condition == "ASD, ID, or DD" | condition == "no ASD, ID, or DD") %>% 
+  ggplot(aes(x=cam_name, y=prevalence, fill=condition)) + 
   geom_bar(position=position_dodge(), stat="identity") + 
   scale_fill_brewer(palette=palette_choice) +
   geom_errorbar(aes(ymin=lower_ci, ymax=higher_ci), width=.2, # Width of the error bars 
@@ -63,3 +84,4 @@ ggplot(fig_data, aes(x=cam_name, y=prevalence, fill=condition)) +
         axis.title.x = element_text(margin = margin(10, 0, 0, 0)),
         axis.title.y = element_text(margin = margin(0, 10, 0, 0))
   )
+
