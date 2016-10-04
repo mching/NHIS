@@ -1,5 +1,5 @@
-cam_name,condition,n,prevalence,prev_se,lower_ci,higher_ci
-multivitamin,US children,3840,0.62332,,0.6094791,0.6371545
+cam_name,condition,n,prevalence,se,lower_ci,higher_ci
+multivitamin,US children,6122,0.62332,,0.6094791,0.6371545
 multivitamin,ASD,88,0.65485,,0.548624,0.7610788
 multivitamin,ID,69,0.55436,,0.4471008,0.6616171
 multivitamin,DD,305,0.65096,,0.593313,0.7086157
@@ -19,3 +19,7 @@ any herb/supplement,ASD,20,0.15858,,0.08743555,0.2297185
 any herb/supplement,ID,8,0.069631,,0.01664411,0.1226182
 any herb/supplement,DD,62,0.14784,,0.1090681,0.1866165
 any herb/supplement,"ASD, ID, or DD",70,0.14189,,0.1072756,0.1764983
+multivitamin,"no ASD, ID, or DD",5754,0.62116,,0.6068472,0.6354822
+specific vitamin,"no ASD, ID, or DD",1275,0.13072,,0.1213726,0.1400636
+mineral,"no ASD, ID, or DD",711,0.072366,,0.06545854,0.07927317
+any herb/supplement,"no ASD, ID, or DD",545,0.059072,,0.05286762,0.06527636
