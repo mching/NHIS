@@ -64,16 +64,29 @@ prop.table(table(factor(x.sa$racerpi2, labels = race_names)))
 
 svytotal(~race_, cam.design)
 
-# Helper function to automate the estimation of proportions in the population
-race_extract <- function(race_name, design) {
-  m <- svymean(~I(race_ == race_name), design)
-  print("======================================================")
-  print(race_name)
-  print(m)
-  print(confint(m))
-}
-
 sapply(race_names, race_extract, cam.design)
+
+# Recode Race to 3 groups
+
+race_names_3 <- c("White only",
+                "Black/African American only", 
+                "Other/Multiple")
+
+table(x.sa$racerpi2)
+x.sa$racerpi2_r <- ifelse(x.sa$racerpi2 > 2, 3, x.sa$racerpi2)
+table(x.sa$racerpi2_r)
+
+cam.design <-update(cam.design,
+                    race_r = factor(x.sa$racerpi2_r, labels = race_names_3))
+
+# table(factor(x.sa$racerpi2, labels = race_names))
+table(factor(x.sa$racerpi2_r, labels = race_names_3))
+prop.table(table(factor(x.sa$racerpi2_r, labels = race_names_3)))
+
+svytotal(~race_r, cam.design)
+
+sapply(race_names_3, race_extract, design = cam.design)
+
 
 # Hispanic
 table(x.sa$hispan_i, useNA = "ifany")

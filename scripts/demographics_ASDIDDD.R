@@ -59,15 +59,16 @@ svyquantile(~age_p, quantiles = 0.5, ASDDDID.design)
 
 # Race
 table(factor(x.sa$racerpi2, labels = race_names))
-sapply(race_names, race_extract, cam.design)
-table(factor(x.sa$racerpi2, labels = race_names), isASD)
-sapply(race_names, race_extract, ASD.design)
-table(factor(x.sa$racerpi2, labels = race_names), isID)
-sapply(race_names, race_extract, ID.design)
-table(factor(x.sa$racerpi2, labels = race_names), isDD)
-sapply(race_names, race_extract, DD.design)
-table(factor(x.sa$racerpi2, labels = race_names), isASDDDID)
-sapply(race_names, race_extract, ASDDDID.design)
+table(x.sa$racerpi2)
+sapply(race_names_3, race_extract, cam.design) # Check if race_extract helper function is set for race_r or race_
+table(factor(x.sa$racerpi2_r, labels = race_names_3), isASD)
+sapply(race_names_3, race_extract, ASD.design)
+table(factor(x.sa$racerpi2_r, labels = race_names_3), isID)
+sapply(race_names_3, race_extract, ID.design)
+table(factor(x.sa$racerpi2_r, labels = race_names_3), isDD)
+sapply(race_names_3, race_extract, DD.design)
+table(factor(x.sa$racerpi2_r, labels = race_names_3), isASDDDID)
+sapply(race_names_3, race_extract, ASDDDID.design)
 
 # Hispanic
 table(x.sa$hispan_TF, useNA = "ifany")
