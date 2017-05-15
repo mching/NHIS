@@ -38,3 +38,13 @@ tablen <- function(varname, ...) {
 xtablen <- function(var1, var2, ...) {
   return(table(var1, var2, useNA = "if"))
 }
+
+# Helper function to automate the estimation of proportions in the population
+race_extract <- function(race_name, design) {
+  m <- svymean(~I(race_r == race_name), design) # use if only 3 race categories used - white, black, other
+#  m <- svymean(~I(race_ == race_name), design) # use if all race categories used
+  print("======================================================")
+  print(race_name)
+  print(m)
+  print(confint(m))
+}
