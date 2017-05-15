@@ -45,6 +45,7 @@ setwd( "~/Dropbox/Mike/NHIS_CAM/" )
 
 library(survey) 	# load survey package (analyzes complex design surveys)
 library(mitools)	# allows analysis of multiply-imputed survey data
+library(tidyverse)
 
 # set R to produce conservative standard errors instead of crashing
 # http://r-survey.r-forge.r-project.org/survey/exmample-lonely.html
