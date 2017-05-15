@@ -820,11 +820,57 @@ svymean(~any_alt, ASDDDID.design)
 confint(svymean(~any_alt, ASDDDID.design))
 
 table(any_alt, isASDDDID, useNA = "if")
-svymean(~any_alt, noASDDDID.design)
-confint(svymean(~any_alt, noASDDDID.design))
+svymean(~any_alt, nonASDDDID.design)
+confint(svymean(~any_alt, nonASDDDID.design))
 
 
 svychisq(~any_alt+isASD_, cam.design)
 svychisq(~any_alt+isID_, cam.design)
 svychisq(~any_alt+isDD_, cam.design)
 svychisq(~any_alt+isASDDDID_, cam.design)
+
+######################################################################
+# Probiotics
+# Ever used: chblst18
+x.sa$chblst18_r <- recode_yes_no_NA(x.sa$chblst18)
+tables_orig_recoded(x.sa$chblst18, x.sa$chblst18_r)
+
+# Update designs
+cam.design <- update(cam.design, PROBIOTICS = x.sa$chblst18_r==1)
+ASD.design <- subset(cam.design, isASD)
+DD.design <- subset(cam.design, isDD)
+ID.design <- subset(cam.design, isID)
+ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
+
+# Total population
+table(PROBIOTICS = x.sa$chblst18_r, useNA = "if")
+svymean(~PROBIOTICS, cam.design, na.rm = T)
+confint(svymean(~PROBIOTICS, cam.design, na.rm = T))
+
+# ASD
+table(PROBIOTICS = x.sa$chblst18_r, asd = isASD, useNA = "if") # overlap PROBIOTICS & ASD
+svymean(~PROBIOTICS, ASD.design, na.rm = T)
+confint(svymean(~PROBIOTICS, ASD.design, na.rm = T))
+
+# ID
+table(PROBIOTICS = x.sa$chblst18_r, id = isID, useNA = "if")
+svymean(~PROBIOTICS, ID.design, na.rm = T)
+confint(svymean(~PROBIOTICS, ID.design, na.rm = T))
+
+# DD
+table(PROBIOTICS = x.sa$chblst18_r, dd = isDD, useNA = "if")
+svymean(~PROBIOTICS, DD.design, na.rm = T)
+confint(svymean(~PROBIOTICS, DD.design, na.rm = T))
+
+# ASD, ID, DD
+table(PROBIOTICS = x.sa$chblst18_r, asdddid = isASDDDID, useNA = "if")
+svymean(~PROBIOTICS, ASDDDID.design, na.rm = T)
+confint(svymean(~PROBIOTICS, ASDDDID.design, na.rm = T))
+
+# no ASD, ID, DD
+table(PROBIOTICS = x.sa$chblst18_r, asdddid = isASDDDID, useNA = "if")
+svymean(~PROBIOTICS, noASDDDID.design, na.rm = T)
+confint(svymean(~PROBIOTICS, noASDDDID.design, na.rm = T))
+
+
