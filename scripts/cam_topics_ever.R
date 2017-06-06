@@ -3,42 +3,48 @@
 # Biologically Based
 # Diet
 
-# # Chelation
-# # Ever used: cch_use
-# x.sa$cch_use_r <- recode_yes_no_NA(x.sa$cch_use)
-# tables_orig_recoded(x.sa$cch_use, x.sa$cch_use_r)
-# 
-# # Update designs
-# cam.design <- update(cam.design, CHELATION = factor(x.sa$cch_use_r, labels = c(T, F)))
-# ASD.design <- subset(cam.design, isASD)
-# DD.design <- subset(cam.design, isDD)
-# ID.design <- subset(cam.design, isID)
-# ASDDDID.design <- subset(cam.design, isASDDDID)
-# 
-# # Total population
-# table(CHELATION = x.sa$cch_use_r, useNA = "if")
-# svymean(~CHELATION, cam.design, na.rm = T)
-# confint(svymean(~CHELATION, cam.design, na.rm = T))
-# 
-# # ASD
-# table(CHELATION = x.sa$cch_use_r, asd = isASD, useNA = "if") # overlap CHELATION & ASD
-# svymean(~CHELATION, ASD.design, na.rm = T)
-# confint(svymean(~CHELATION, ASD.design, na.rm = T))
-# 
-# # ID
-# table(CHELATION = x.sa$cch_use_r, id = isID, useNA = "if")
-# svymean(~CHELATION, ID.design, na.rm = T)
-# confint(svymean(~CHELATION, ID.design, na.rm = T))
-# 
-# # DD
-# table(CHELATION = x.sa$cch_use_r, dd = isDD, useNA = "if")
-# svymean(~CHELATION, DD.design, na.rm = T)
-# confint(svymean(~CHELATION, DD.design, na.rm = T))
-# 
-# # ASD, ID, DD
-# table(CHELATION = x.sa$cch_use_r, asdddid = isASDDDID, useNA = "if")
-# svymean(~CHELATION, ASDDDID.design, na.rm = T)
-# confint(svymean(~CHELATION, ASDDDID.design, na.rm = T))
+# Chelation
+# Ever used: cch_use
+x.sa$cch_use_r <- recode_yes_no_NA(x.sa$cch_use)
+tables_orig_recoded(x.sa$cch_use, x.sa$cch_use_r)
+
+# Update designs
+cam.design <- update(cam.design, CHELATION = factor(x.sa$cch_use_r, labels = c(T, F)))
+ASD.design <- subset(cam.design, isASD)
+DD.design <- subset(cam.design, isDD)
+ID.design <- subset(cam.design, isID)
+ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
+
+# Total population
+table(CHELATION = x.sa$cch_use_r, useNA = "if")
+svymean(~CHELATION, cam.design, na.rm = T)
+confint(svymean(~CHELATION, cam.design, na.rm = T))
+
+# ASD
+# overlap CHELATION & ASD
+table(CHELATION = x.sa$cch_use_r, asd = isASD, useNA = "if")
+svymean(~CHELATION, ASD.design, na.rm = T)
+confint(svymean(~CHELATION, ASD.design, na.rm = T))
+
+# ID
+table(CHELATION = x.sa$cch_use_r, id = isID, useNA = "if")
+svymean(~CHELATION, ID.design, na.rm = T)
+confint(svymean(~CHELATION, ID.design, na.rm = T))
+
+# DD
+table(CHELATION = x.sa$cch_use_r, dd = isDD, useNA = "if")
+svymean(~CHELATION, DD.design, na.rm = T)
+confint(svymean(~CHELATION, DD.design, na.rm = T))
+
+# ASD, ID, DD
+table(CHELATION = x.sa$cch_use_r, asdddid = isASDDDID, useNA = "if")
+svymean(~CHELATION, ASDDDID.design, na.rm = T)
+confint(svymean(~CHELATION, ASDDDID.design, na.rm = T))
+
+# no ASD, ID, DD
+svymean(~CHELATION, noASDDDID.design, na.rm = T)
+confint(svymean(~CHELATION, noASDDDID.design, na.rm = T))
 
 ######################################################################
 # Any vitamin, mineral
@@ -263,6 +269,10 @@ table(HOMEOPATHY = x.sa$chm_use_r, asdddid = isASDDDID, useNA = "if")
 svymean(~HOMEOPATHY, ASDDDID.design, na.rm = T)
 confint(svymean(~HOMEOPATHY, ASDDDID.design, na.rm = T))
 
+# no ASD, ID, DD
+table(HOMEOPATHY = x.sa$chm_use_r, asdddid = isASDDDID, useNA = "if")
+svymean(~HOMEOPATHY, noASDDDID.design, na.rm = T)
+confint(svymean(~HOMEOPATHY, noASDDDID.design, na.rm = T))
 
 ######################################################################
 
@@ -312,7 +322,7 @@ table(YOGA = x.sa$cyge_yog_r, asdddid = isASDDDID, useNA = "if")
 svymean(~YOGA, ASDDDID.design, na.rm = T)
 confint(svymean(~YOGA, ASDDDID.design, na.rm = T))
 
-# ASD, ID, DD
+# no ASD, ID, DD
 table(YOGA = x.sa$cyge_yog_r, asdddid = isASDDDID, useNA = "if")
 svymean(~YOGA, noASDDDID.design, na.rm = T)
 confint(svymean(~YOGA, noASDDDID.design, na.rm = T))
@@ -718,6 +728,7 @@ ASD.design <- subset(cam.design, isASD)
 DD.design <- subset(cam.design, isDD)
 ID.design <- subset(cam.design, isID)
 ASDDDID.design <- subset(cam.design, isASDDDID)
+noASDDDID.design <- subset(cam.design, !isASDDDID)
 
 # Total population
 table(NATUROPATHY = x.sa$cnt_use_r, useNA = "if")
@@ -744,7 +755,10 @@ table(NATUROPATHY = x.sa$cnt_use_r, asdddid = isASDDDID, useNA = "if")
 svymean(~NATUROPATHY, ASDDDID.design, na.rm = T)
 confint(svymean(~NATUROPATHY, ASDDDID.design, na.rm = T))
 
-
+# No ASD, ID, DD
+table(NATUROPATHY = x.sa$cnt_use_r, asdddid = isASDDDID, useNA = "if")
+svymean(~NATUROPATHY, noASDDDID.design, na.rm = T)
+confint(svymean(~NATUROPATHY, noASDDDID.design, na.rm = T))
 ######################################################################
 
 # Energy healing
