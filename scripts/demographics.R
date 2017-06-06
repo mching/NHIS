@@ -32,22 +32,22 @@ nrow(x.sa)
 # Gender breakdown
 cam.design <- update(cam.design, sex_f_ = factor(x.sa$sex, labels = c("male", "female")))
 
-table(x.sa$sex)
-prop.table(table(x.sa$sex))
-
-svytotal(~sex_f_, design = cam.design)
-confint(svytotal(~sex_f_, design = cam.design))
-
-svymean(~I(sex_f_ == "male"), cam.design)
-confint(svymean(~I(sex_f_ == "male"), cam.design))
+# table(x.sa$sex)
+# prop.table(table(x.sa$sex))
+# 
+# svytotal(~sex_f_, design = cam.design)
+# confint(svytotal(~sex_f_, design = cam.design))
+# 
+# svymean(~I(sex_f_ == "male"), cam.design)
+# confint(svymean(~I(sex_f_ == "male"), cam.design))
 
 # Age breakdown
-table(x.sa$age_p)
-prop.table(table(x.sa$age_p))
-
-svymean(~age_p, cam.design)
-confint(svymean(~age_p, cam.design))
-svyquantile(~age_p, cam.design, quantiles=c(0.25,0.5,0.75))
+# table(x.sa$age_p)
+# prop.table(table(x.sa$age_p))
+# 
+# svymean(~age_p, cam.design)
+# confint(svymean(~age_p, cam.design))
+# svyquantile(~age_p, cam.design, quantiles=c(0.25,0.5,0.75))
 
 # Race
 race_names <- c("White only",
@@ -59,10 +59,10 @@ race_names <- c("White only",
 cam.design <-update(cam.design,
                     race_ = factor(x.sa$racerpi2, labels = race_names))
 
-table(factor(x.sa$racerpi2, labels = race_names))
-prop.table(table(factor(x.sa$racerpi2, labels = race_names)))
-
-svytotal(~race_, cam.design)
+# table(factor(x.sa$racerpi2, labels = race_names))
+# prop.table(table(factor(x.sa$racerpi2, labels = race_names)))
+# 
+# svytotal(~race_, cam.design)
 
 sapply(race_names, race_extract, cam.design)
 
@@ -72,9 +72,9 @@ race_names_3 <- c("White only",
                 "Black/African American only", 
                 "Other/Multiple")
 
-table(x.sa$racerpi2)
+# table(x.sa$racerpi2)
 x.sa$racerpi2_r <- ifelse(x.sa$racerpi2 > 2, 3, x.sa$racerpi2)
-table(x.sa$racerpi2_r)
+# table(x.sa$racerpi2_r)
 
 cam.design <-update(cam.design,
                     race_r = factor(x.sa$racerpi2_r, labels = race_names_3))
@@ -83,27 +83,71 @@ cam.design <-update(cam.design,
 table(factor(x.sa$racerpi2_r, labels = race_names_3))
 prop.table(table(factor(x.sa$racerpi2_r, labels = race_names_3)))
 
-svytotal(~race_r, cam.design)
-
-sapply(race_names_3, race_extract_r, design = cam.design)
+# svytotal(~race_r, cam.design)
+# 
+# sapply(race_names_3, race_extract_r, design = cam.design)
 
 
 # Hispanic
-table(x.sa$hispan_i, useNA = "ifany")
+# table(x.sa$hispan_i, useNA = "ifany")
 x.sa$hispan_TF <- ifelse(x.sa$hispan==12, "Not Hispanic", "Hispanic")
 x.sa$hispan_TF <- factor(x.sa$hispan_TF)
-table(x.sa$hispan_TF, useNA = "ifany")
-prop.table(table(x.sa$hispan_TF, useNA = "ifany"))
+# table(x.sa$hispan_TF, useNA = "ifany")
+# prop.table(table(x.sa$hispan_TF, useNA = "ifany"))
 
 cam.design <- update(cam.design, hispanic_ = x.sa$hispan_TF)
 
-svytotal(~hispanic_, cam.design)
-confint(svytotal(~hispanic_, cam.design))
+# svytotal(~hispanic_, cam.design)
+# confint(svytotal(~hispanic_, cam.design))
+# 
+# svymean(~I(hispanic_ == "Hispanic"), cam.design)
+# confint(svymean(~I(hispanic_ == "Hispanic"), cam.design))
 
-svymean(~I(hispanic_ == "Hispanic"), cam.design)
-confint(svymean(~I(hispanic_ == "Hispanic"), cam.design))
 
-# Diagnosis breakdown
+############################################################
+# Explore financial and highest income fields
+############################################################
+
+# table(x.sa$incgrp3, useNA = "ifany")
+x.sa$incgrp3 <- ifelse(x.sa$incgrp3 > 90, NA, x.sa$incgrp3)
+
+x.sa$INCOME <- factor(x.sa$incgrp3, labels = c("$0-$34,999",
+                                               "$35000-$74999",
+                                               "$75000-$99999",
+                                               "$100000+"))
+
+# EXPLORATORY
+# table(x.sa$INCOME, useNA = "ifany")
+# svymean(~INCOME, cam.design, na.rm = T)
+# confint(svymean(~INCOME, cam.design, na.rm = T))
+cam.design <- update(cam.design, INCOME = x.sa$INCOME)
+
+# table(x.sa$fm_educ1, useNA = "ifany")
+x.sa$fm_educ1 <- ifelse(x.sa$fm_educ1 > 90, NA, x.sa$fm_educ1)
+
+# Recode to HS grad or less, some college, college grad, postgrad degree
+x.sa$EDUCATION <- ifelse(x.sa$fm_educ1 <= 4, 0, x.sa$fm_educ1)
+x.sa$EDUCATION <- ifelse(x.sa$EDUCATION == 5, 1, x.sa$EDUCATION)
+x.sa$EDUCATION <- ifelse((x.sa$EDUCATION > 5 & x.sa$EDUCATION < 9), 2, x.sa$EDUCATION)
+x.sa$EDUCATION <- ifelse((x.sa$EDUCATION == 9), 3, x.sa$EDUCATION)
+
+x.sa$EDUCATION <- factor(x.sa$EDUCATION, labels = c("HS or lower",
+                                                    "some college",
+                                                    "college grad",
+                                                    "postgrad"))
+
+# table(x.sa$EDUCATION, useNA = "ifany")
+# table(x.sa$EDUCATION, isASD, useNA = "ifany")
+# table(x.sa$EDUCATION, isID, useNA = "ifany")
+# table(x.sa$EDUCATION, isDD, useNA = "ifany")
+# table(x.sa$EDUCATION, isASDDDID, useNA = "ifany")
+# svymean(~EDUCATION, cam.design, na.rm = T)
+cam.design <- update(cam.design, EDUCATION = x.sa$EDUCATION)
+
+
+################
+# diagnoses
+################
 
 # ADHD
 table(x.sa$add2, useNA = "if")
