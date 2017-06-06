@@ -85,7 +85,7 @@ prop.table(table(factor(x.sa$racerpi2_r, labels = race_names_3)))
 
 svytotal(~race_r, cam.design)
 
-sapply(race_names_3, race_extract, design = cam.design)
+sapply(race_names_3, race_extract_r, design = cam.design)
 
 
 # Hispanic
