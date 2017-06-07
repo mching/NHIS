@@ -35,6 +35,10 @@ x <- models_therapy("ANYHERB")
 lapply(x, summary)
 lapply(x, OR_model)
 
+x <- models_therapy("PROBIOTICS")
+lapply(x, summary)
+lapply(x, OR_model)
+
 x <- models_therapy("any_alt")
 lapply(x, summary)
 lapply(x, OR_model)
@@ -55,5 +59,30 @@ x <- models_therapy("YOGA")
 lapply(x, summary)
 lapply(x, OR_model)
 
+x <- models_therapy("HOMEOPATHY")
+lapply(x, summary)
+lapply(x, OR_model)
 
-#######
+x <- models_therapy("CHELATION")
+lapply(x, summary)
+lapply(x, OR_model)
+
+x <- models_therapy("NATUROPATHY")
+lapply(x, summary)
+lapply(x, OR_model)
+
+x <- models_therapy("TRADHEALER")
+lapply(x, summary)
+lapply(x, OR_model)
+
+x <- models_therapy("BIOFEEDBACK")
+lapply(x, summary)
+lapply(x, OR_model)
+
+x <- models_therapy("CRANIOSACRAL")
+lapply(x, summary)
+lapply(x, OR_model)
+
+x <- models_therapy("ACUPUNCTURE")
+lapply(x, summary)
+lapply(x, OR_model)
